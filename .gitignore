@@ -1,0 +1,17 @@
+# 后端忽略规则（只作用于backend/子目录）
+/backend/.idea/
+/backend/*.iml
+/backend/target/
+/backend/logs/
+/backend/application-dev.yml
+
+# 前端忽略规则（只作用于frontend/子目录）
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.vscode/
+/frontend/.env.local
+
+# 通用忽略（仓库根目录的临时文件）
+*.log
+tmp/
+start-all.bat  # 如果想忽略一键启动脚本，就加这行（可选）
