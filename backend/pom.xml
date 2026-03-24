@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.0</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>com.example</groupId>
+	<artifactId>chat-agent-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>chat-agent-demo</name>
+	<description>智能对话系统（阿里云DashScope SDK）</description>
+
+	<properties>
+		<java.version>25</java.version>
+		<maven.compiler.source>25</maven.compiler.source>
+		<maven.compiler.target>25</maven.compiler.target>
+	</properties>
+
+	<!-- 仅加这一段：解决AgentScope依赖下载/识别报错 -->
+	<repositories>
+		<repository>
+			<id>maven-central</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- 你的原有依赖全保留，不动 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dashscope-sdk-java</artifactId>
+			<version>2.15.1</version>
+		</dependency>
+
+		<!-- 只改这一行：适配你下载的agentscope-1.0.9 -->
+		<dependency>
+			<groupId>io.agentscope</groupId> <!-- 重点：包名是io不是com.alibaba -->
+			<artifactId>agentscope</artifactId>
+			<version>1.0.9</version>
+			<scope>system</scope> <!-- 本地导入jar包，避免Maven下载冲突 -->
+			<!-- 替换成你本地jar包的绝对路径！！！比如D:/download/agentscope-1.0.9.jar -->
+			<systemPath>D:/demo1/agentscope-1.0.9.jar</systemPath>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- 第一步：升级编译插件，支持JDK25 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.13.0</version> <!-- 升级到支持JDK25的版本 -->
+				<configuration>
+					<source>25</source> <!-- 写整数25，对应你的本地JDK25.02，插件能识别 -->
+					<target>25</target>
+					<encoding>UTF-8</encoding>
+					<!-- 指定你本地JDK25.02的安装路径，彻底绑定本地SDK -->
+					<executable>C:/Users/Administrator/.jdks/openjdk-25.0.2/bin/javac</executable>
+					<fork>true</fork> <!-- 强制使用指定的本地JDK编译 -->
+				</configuration>
+			</plugin>
+
+			<!-- 第二步：Spring Boot插件保留，无需改 -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

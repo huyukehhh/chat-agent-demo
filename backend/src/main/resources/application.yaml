@@ -1,0 +1,6 @@
+
+dashscope:
+  api-key: ${DASHSCOPE_API_KEY}  # 必须替换成从阿里云获取的真实 Key
+
+server:
+  port: 8080
